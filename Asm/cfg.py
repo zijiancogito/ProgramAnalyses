@@ -7,6 +7,25 @@ import bingraphvis
 
 import argparse
 
+def main():
+  parser = argparse.ArgumentParser(description='Extract ASM CFG from Projects.')
+  subparsers = parser.add_subparsers(help='sub-command help')
+
+  parser_1 = subparsers.add_parser('dot-cfg', help="Only build cfg.")
+  parser_1.add_argument('-i', '--bin')
+
+  parser_2 = subparsers.add_parser('analyses-cfg', help="Analyses entrie CFG.")
+  parser_2.add_argument('-i', '--bin')
+
+  args = parser.parse_args()
+
+  subp = sys.argv[1]
+  if subp == "dot-cfg":
+    get_func_addrs(args.bin)
+
+if __name__ == "__main__":
+  main()
+
 class Proj:
   def __init__(self, binfile) -> None:
     self.p = angr.Project(binfile, load_options={"auto_load_libs": False})
@@ -128,17 +147,9 @@ def get_func_addrs(binfile):
       #   print(blk.addr)
       # print(type(caps))
 
-def test_get_func_addrs():
-  import pdb
-  import sys
-  pdb.set_trace()
-  test = sys.argv[1]
-  get_func_addrs(test)
-
-def main():
-  parser = argparse.ArgumentParser(description='Extract ASM from Projects.')
-  
-  test_get_func_addrs()
-
-if __name__ == "__main__":
-  main()
+# def test_get_func_addrs():
+#   import pdb
+#   import sys
+#   pdb.set_trace()
+#   test = sys.argv[1]
+#   get_func_addrs(test)
