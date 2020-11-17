@@ -28,5 +28,6 @@ do
   if [[ $file == *".dot" ]]
   then
     dot -Tpng -o ${file%.dot}.png $file
+    python3 /root/proj/ProgramAnalyses/Src/cfg.py $file
   fi
 done
