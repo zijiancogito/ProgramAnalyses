@@ -2,7 +2,7 @@ from sys import path, setdlopenflags
 import angr
 import sys
 
-from angrutils import plot_cfg, hook0, set_plot_style
+from angrutils import plot_cfg, hook0, set_plot_style, plot_cdg
 import bingraphvis
 import networkx as nx
 
@@ -21,6 +21,7 @@ def get_func_addrs(binfile):
   p = angr.Project(binfile, load_options={'auto_load_libs': False})
   cfg = p.analyses.CFGEmulated(keep_state=True, normalize=True)
   ddg = p.analyses.DDG(cfg)
+  
   import os
   dg_view = ddg.view
   # print(ddg._data_graph.nodes)
@@ -28,19 +29,22 @@ def get_func_addrs(binfile):
   # print(cfg.kb.functions.block_map)
   for address, function in cfg.kb.functions._function_map.items():
     # print(function._addr_to_block_node)
-    if function.name != "main":
-      continue
+    # if function.name != "main":
+    #   continue
+    print("Function Name: %s" % function.name)
     graph = function.graph_ex(True)
     print(function.operations)
     print(function.code_constants)
     print(function.local_runtime_values)
     print(function.startpoint)
-    print(list(function._endpoints["return"])[0])
-    for path in nx.all_simple_paths(graph, function.startpoint, list(function._endpoints["return"])[0]):
-      print(path)
-      print(len(path))
+    # print(list(function._endpoints["return"])[0])
+    # for path in nx.all_simple_paths(graph, function.startpoint, list(function._endpoints["return"])[0]):
+    #   print(path)
+    #   print(len(path))
     # graph.render(filename='MyPicture', directory="./",view=False, format="png")
+    cdg = p.analyses.CDG(cfg=cfg, start=address)
     plot_cfg(cfg, os.path.join(d,f"{function.name}_cfg"), format="png", asminst=True, vexinst=False, func_addr={address:True}, debug_info=False, remove_imports=True, remove_path_terminator=True)
+    plot_cdg(cfg, cdg, "%s_cdg" % function.name, pd_edges=True, cg_edges=True)
 
     regx = ['rax', 'rbx', 'rax', 'rdx', 'rsi', 'rdi', 'rip', 'rbp', 'rsp', 'r8', 'r9', 'r10', 'r11', 'r12', 'r13', 'r14', 'r15', 'eax', 'ebx', 'ecx', 'edx', 'esi', 'edi', 'eip', 'ebp', 'esp']
     # for blk in function.blocks:

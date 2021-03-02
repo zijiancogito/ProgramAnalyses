@@ -5,13 +5,16 @@ import re
 import networkx as nx
 
 
-path = ''
-node_lst = []
-node_info = dict()
-edges = []
+# path = ''
+# node_lst = []
+# node_info = dict()
+# edges = []
 
 # there are two types of line: new node introduction, edge relationship
-def parse_dot():
+def parse_dot(path):
+    node_lst = []
+    node_info = dict()
+    edges = []
     with open(path, 'r') as r:
         for _line in r.readlines():
             if _line.strip().startswith('Node'):
@@ -37,6 +40,7 @@ def parse_dot():
                     left_node = _line[s_index_left:e_index_left + 1].split(':')[0]
                     right_node = _line[s_index_right:e_index_right + 1].split(':')[0]
                     edges.append((left_node, right_node))
+    return node_lst, node_info, edges
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

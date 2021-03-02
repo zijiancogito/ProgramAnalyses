@@ -18,16 +18,18 @@ if [[ $# == 0 ]] || [[ "$1" == "-h" ]]; then
     help
     exit 1
 fi
-
 cd $1
-clang -O$3 -fno-inline-functions $2.c -o $2.o
-clang -O$3 -fno-inline-functions $2.c -emit-llvm -S -o $2.ll
-opt -dot-cfg $2.ll > /dev/null
+mkdir o$3
+clang -O$3 -fno-inline-functions $2.c -o o$3/$2.o
+clang -O$3 -fno-inline-functions $2.c -emit-llvm -S -o o$3/$2.ll
+cd o$3
+opt -dot-cfg ../$2.ll > /dev/null
 for file in `ls -a`
 do
   if [[ $file == *".dot" ]]
   then
     dot -Tpng -o ${file%.dot}.png $file
+    echo $file
     python3 /root/proj/ProgramAnalyses/Src/cfg.py $file
   fi
 done

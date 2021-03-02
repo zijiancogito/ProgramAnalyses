@@ -1,0 +1,169 @@
+%36:
+36:
+ret i32 0
+
+1
+
+
+%10:
+10:
+store i32 1, i32* @i, align 4, !tbaa !2
+br label %32
+
+%11:
+11:
+%12 = phi i32 [ %19, %18 ], [ %7, %5 ]
+br i1 %8, label %36, label %13
+|{<s0>T|<s1>F}
+
+%21:
+21:
+%22 = load i32, i32* @j, align 4, !tbaa !2
+%23 = add nsw i32 %22, 1
+store i32 %23, i32* @j, align 4, !tbaa !2
+%24 = icmp eq i32 %23, 9
+br i1 %24, label %25, label %18
+|{<s0>T|<s1>F}
+
+%18:
+18:
+%19 = add nsw i32 %12, 1
+store i32 %19, i32* @i, align 4, !tbaa !2
+%20 = icmp eq i32 %19, 31
+br i1 %20, label %10, label %11
+|{<s0>T|<s1>F}
+
+%32:
+32:
+%33 = phi i32 [ %29, %25 ], [ 1, %10 ]
+%34 = phi i32 [ %31, %25 ], [ %6, %10 ]
+%35 = icmp slt i32 %33, 32
+br i1 %35, label %5, label %36
+|{<s0>T|<s1>F}
+
+%5:
+5:
+%6 = phi i32 [ %34, %32 ], [ %4, %3 ]
+%7 = phi i32 [ %33, %32 ], [ %1, %3 ]
+%8 = icmp eq i32 %6, 15
+%9 = icmp eq i32 %7, 31
+br i1 %9, label %10, label %11
+|{<s0>T|<s1>F}
+
+%25:
+25:
+store i32 1, i32* %15, align 4, !tbaa !2
+%26 = getelementptr inbounds [30 x i32], [30 x i32]* @a, i64 0, i64 %14
+store i32 9, i32* %26, align 4, !tbaa !2
+store i32 0, i32* @j, align 4, !tbaa !2
+%27 = tail call i32 (i8*, ...) @printf(i8* nonnull dereferenceable(1) 
+
+... getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i32 %12)
+%28 = load i32, i32* @i, align 4, !tbaa !2
+%29 = add nsw i32 %28, 1
+store i32 %29, i32* @i, align 4, !tbaa !2
+%30 = load i32, i32* @c, align 4, !tbaa !2
+%31 = add nsw i32 %30, 1
+store i32 %31, i32* @c, align 4, !tbaa !2
+br label %32
+
+%13:
+13:
+%14 = sext i32 %12 to i64
+%15 = getelementptr inbounds [30 x i32], [30 x i32]* @b, i64 0, i64 %14
+%16 = load i32, i32* %15, align 4, !tbaa !2
+%17 = icmp eq i32 %16, 0
+br i1 %17, label %21, label %18
+|{<s0>T|<s1>F}
+
+8
+
+
+%3:
+3:
+%4 = load i32, i32* @c, align 4
+br label %5
+
+1
+
+
+%0:
+%1 = load i32, i32* @i, align 4, !tbaa !2
+%2 = icmp slt i32 %1, 32
+br i1 %2, label %3, label %36
+|{<s0>T|<s1>F}
+
+1
+
+
+4
+
+Function Name: main
+0x401208:	xor	eax, eax
+0x40120a:	pop	rcx
+0x40120b:	ret	
+
+1
+
+
+0
+
+
+0x401173:	cmp	eax, 0xf
+0x401176:	je	0x401208
+
+0x401160:	add	rsi, 1
+0x401164:	mov	dword ptr [rip + 0x2ec6], esi
+0x40116a:	cmp	esi, 0x1f
+0x40116d:	je	0x4011f0
+
+0x40117c:	cmp	dword ptr [rsi*4 + 0x4040e0], 0
+0x401184:	jne	0x401160
+
+0x401146:	cmp	ecx, 0x1f
+0x401149:	je	0x4011f0
+
+0x40119a:	mov	dword ptr [rsi*4 + 0x4040e0], 1
+0x4011a5:	mov	dword ptr [rsi*4 + 0x404060], 9
+0x4011b0:	mov	dword ptr [rip + 0x2e9a], 0
+0x4011ba:	mov	edi, 0x402004
+0x4011bf:	xor	eax, eax
+0x4011c1:	call	0x401030
+
+0x4011f0:	mov	dword ptr [rip + 0x2e36], 1
+0x4011fa:	mov	ecx, 1
+0x4011ff:	cmp	ecx, 0x20
+0x401202:	jl	0x401146
+
+0x401186:	mov	ecx, dword ptr [rip + 0x2ec8]
+0x40118c:	add	ecx, 1
+0x40118f:	mov	dword ptr [rip + 0x2ebf], ecx
+0x401195:	cmp	ecx, 9
+0x401198:	jne	0x401160
+
+0x4011c6:	mov	ecx, dword ptr [rip + 0x2e64]
+0x4011cc:	add	ecx, 1
+0x4011cf:	mov	dword ptr [rip + 0x2e5b], ecx
+0x4011d5:	mov	eax, dword ptr [rip + 0x2e75]
+0x4011db:	add	eax, 1
+0x4011de:	mov	dword ptr [rip + 0x2e6c], eax
+0x4011e4:	cmp	ecx, 0x20
+0x4011e7:	jl	0x401146
+
+8
+
+
+0x401140:	mov	eax, dword ptr [rip + 0x2f0a]
+
+1
+
+
+0x401130:	push	rax
+0x401131:	mov	ecx, dword ptr [rip + 0x2ef9]
+0x401137:	cmp	ecx, 0x1f
+0x40113a:	jg	0x401208
+
+1
+
+
+4
